@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,108 +8,134 @@ namespace UI.RobotInstantiationPanel
     [RequireComponent(typeof(UIDocument))]
     public class MenuScript : MonoBehaviour
     {
-        /*
-          public  new class UxmlFactory : UxmlFactory<MenuController, UxmlTraits>{}
-          public new class UxmlTraits : VisualElement.UxmlTraits{}
-         */
         private VisualElement _root;
+        [SerializeField] private SceneObjectsInstantiator _sceneObjectsInstantiator;
+        private ComponentsScript _componentsScript;
 
         private Button _buttonShowHidePanel;
         private VisualElement _slidePanel;
-        private Toggle _positioner;
-        private Toggle _painter;
-
-        private bool _showPanel = false;
-
-        //Instantiation UI
-        private VisualElement _togglePositionerVisualElement;
-        private VisualElement _togglePainterVisualElement;
-
-        //Components UI
-        private ComponentsScript _componentsScript;
-
-        [SerializeField] private SceneObjectsInstantiator _sceneObjectsInstantiator;
+        private ScrollView _scrollView;
+        private bool _showSlidePanel = false;
+        
+        private List <VisualElement> _visualElementList = new List<VisualElement>();
+        private List <Toggle> _toggleList = new List<Toggle>();
+        private List<GameObject> _robotsList = new List<GameObject>();
 
         void Start()
         {
-            //Setup
-            _sceneObjectsInstantiator.ConstructMenuScript(this);
             _root = GetComponent<UIDocument>().rootVisualElement;
+            _componentsScript = new ComponentsScript();
             _buttonShowHidePanel = _root.Q<Button>("ButtonShowHidePanel");
             _slidePanel = _root.Q<VisualElement>("SlidePanel");
-            _positioner = _root.Q<Toggle>("TogglePositioner");
-            _painter = _root.Q<Toggle>("TogglePainter");
-
-            //TogglePositionerVisualElement
-
+            _scrollView = _root.Q<ScrollView>("ScrollView");
             _buttonShowHidePanel.text = "Show Panel";
-
             _buttonShowHidePanel.clicked += ShowHidePanel;
-            _painter.RegisterCallback<ClickEvent>(CreatePainter);
-            _positioner.RegisterCallback<ClickEvent>(CreatePositioner);
-
-            //Instantiation Runtime UI
-            //      m_Toggle.RegisterValueChangedCallback(OnToggleValueChanged); 
-            _togglePositionerVisualElement = _root.Q<VisualElement>("TogglePositionerVisualElement");
-            _togglePainterVisualElement = _root.Q<VisualElement>("TogglePainterVisualElement");
-            _togglePositionerVisualElement.style.display = DisplayStyle.None;
-            _togglePainterVisualElement.style.display = DisplayStyle.None;
-
-        }
-
-        private void OnDestroy()
-        {
-            _buttonShowHidePanel.clickable.clicked -= ShowHidePanel;
-            _painter.UnregisterCallback<ClickEvent>(CreatePainter);
-            _positioner.UnregisterCallback<ClickEvent>(CreatePositioner);
-        }
-
-
-        private void CreatePainter(ClickEvent evt)
-        {
-            //Initialize UI Components
-            _componentsScript = new ComponentsScript();
-
-            if (_painter.value)
+            
+            foreach (var robot in _sceneObjectsInstantiator.Robots)
             {
-                _togglePainterVisualElement.style.display = DisplayStyle.Flex;
-                _sceneObjectsInstantiator.CreateDestroyPainter();
-                _componentsScript.CreateSliderComponent(_togglePainterVisualElement,
-                    _sceneObjectsInstantiator.SceneObject);
+                SetUpRobot(robot);
+            }
+        }
+
+        private void SetUpRobot(GameObject robot)
+        {
+
+                var toggle = new Toggle("Toggle" + robot.name);
+                toggle.label = "Create " + robot.name;
+                
+                var vis = new VisualElement
+                {
+                    name = "VisualElement" + robot.name,
+                    style =
+                    {
+                        display = DisplayStyle.None
+                    }
+                };
+
+                _toggleList.Add(toggle);
+                _visualElementList.Add(vis);
+                _robotsList.Add(robot);
+                _scrollView.Add(toggle);
+                _scrollView.Add(vis);
+                
+                toggle.RegisterCallback<ClickEvent, Toggle> (FindRobot, toggle);
+            }
+
+        private void FindRobot(ClickEvent evt, Toggle toggleClicked)
+        {
+            int robotIndex;
+            for (int toggleIndex = 0; toggleIndex < _toggleList.Count; toggleIndex++)
+            {
+                if (toggleClicked == _toggleList[toggleIndex])
+                {
+                    robotIndex = toggleIndex;
+                    CreateRobot(robotIndex, toggleClicked);
+                }
+            }
+        }
+
+        private void CreateRobot(int robotIndex, Toggle toggleClicked)
+        {
+            if (toggleClicked.value)
+            {
+                bool create = true;
+                _visualElementList[robotIndex].style.display = DisplayStyle.Flex;
+                _sceneObjectsInstantiator.CreateOrDestroyObject(_robotsList[robotIndex]);
+                AddRobotComponents(_robotsList[robotIndex], robotIndex, create);
             }
             else
             {
-                _togglePainterVisualElement.style.display = DisplayStyle.None;
-                _sceneObjectsInstantiator.CreateDestroyPainter();
-                _componentsScript.DestroySliderComponent(_togglePainterVisualElement);
+                bool create = false;
+                _visualElementList[robotIndex].style.display = DisplayStyle.None;
+                _sceneObjectsInstantiator.CreateOrDestroyObject(_robotsList[robotIndex]);
+                AddRobotComponents(_robotsList[robotIndex], robotIndex, create);
             }
         }
 
-
-        private void CreatePositioner(ClickEvent evt)
+        private void AddRobotComponents(GameObject robot, int robotIndex, bool create)
         {
-            if (_positioner.value)
+            if (robot.GetComponent<SliderComponent>() != null)
             {
-                _togglePositionerVisualElement.style.display = DisplayStyle.Flex;
-                _sceneObjectsInstantiator.CreateDestroyPositioner();
-                _componentsScript.CreateSliderComponent(_togglePositionerVisualElement,
-                    _sceneObjectsInstantiator.SceneObject);
-                _componentsScript.CreatePoseComponent(_togglePositionerVisualElement,
-                    _sceneObjectsInstantiator.SceneObject);
+                if (create)
+                {
+                    _componentsScript.CreateSliderComponent(_visualElementList[robotIndex],
+                        _sceneObjectsInstantiator.SceneObject);
+                }
+                else
+                {
+                    _componentsScript.DestroySliderComponent(_visualElementList[robotIndex]);
+                }
             }
-            else
+            if (robot.GetComponent<PoseComponent>() != null)
             {
-                _togglePositionerVisualElement.style.display = DisplayStyle.None;
-                _sceneObjectsInstantiator.CreateDestroyPositioner();
-                _componentsScript.DestroySliderComponent(_togglePositionerVisualElement);
-                _componentsScript.DestroyPoseComponent(_togglePositionerVisualElement);
+                if (create)
+                {
+                    _componentsScript.CreatePoseComponent(_visualElementList[robotIndex],
+                        _sceneObjectsInstantiator.SceneObject);
+                }
+                else
+                {
+                    _componentsScript.DestroyPoseComponent(_visualElementList[robotIndex]);
+                }
+            }
+            if (robot.GetComponent<IPComponent>() != null)
+            {
+                if (create)
+                {
+                    _componentsScript.CreateIPComponent(_visualElementList[robotIndex],
+                        _sceneObjectsInstantiator.SceneObject);
+                }
+                else
+                {
+                    _componentsScript.DestroyIPComponent(_visualElementList[robotIndex]);
+                }
             }
         }
 
         private void ShowHidePanel()
         {
-            _showPanel = !_showPanel;
-            if (_showPanel)
+            _showSlidePanel = !_showSlidePanel;
+            if (_showSlidePanel)
             {
                 _buttonShowHidePanel.text = "Hide Panel";
                 _slidePanel.transform.position = Vector3.left * _slidePanel.localBound.width;

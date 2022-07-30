@@ -114,7 +114,47 @@ namespace UI.RobotInstantiationPanel
 
         #region IP Component
 
+        private GameObject _iPObject;
+        private TextField _iPTextFieldFirst;
+        private TextField _iPTextFieldSecond;
+        private Button _iPButton;
+        private Label _iPLabel;
 
+        public void CreateIPComponent(VisualElement root, GameObject robot)
+        {
+            _iPObject = robot.gameObject;
+
+            _iPLabel = new Label("iP Component");
+            _iPLabel.name = "iPLabel";
+            root.Add(_iPLabel);
+
+            _iPTextFieldFirst = new TextField("First Value: ");
+            _iPTextFieldFirst.name = "iPTextInputFieldFirst";
+            root.Add(_iPTextFieldFirst);
+            
+            _iPTextFieldSecond = new TextField("Second Value: ");
+            _iPTextFieldSecond.name = "iPTextInputFieldSecond";
+            root.Add(_iPTextFieldSecond);
+
+            _iPButton = new Button();
+            _iPButton.text = "Confirm";
+            _iPButton.name = "iPButton";
+            _iPButton.RegisterCallback<ClickEvent>(ConfirmIPButtonClick);
+            root.Add(_iPButton);
+        }
+
+        private void ConfirmIPButtonClick(ClickEvent evt)
+        {
+            Debug.Log(_iPTextFieldFirst.text +":" + _iPTextFieldSecond.text);
+        }
+
+        public void DestroyIPComponent(VisualElement root)
+        {
+            root.Remove(root.Q<TextField>("iPTextInputFieldFirst"));
+            root.Remove(root.Q<TextField>("iPTextInputFieldSecond"));
+            root.Remove(root.Q<Button>("iPButton"));
+            root.Remove(root.Q<Label>("iPLabel"));
+        }
 
         #endregion
     }

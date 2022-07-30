@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8004119965529944187}
   - component: {fileID: 5058667892843784372}
   - component: {fileID: 5241250377948319223}
+  - component: {fileID: 7575323196461516228}
+  - component: {fileID: -8100782827559692501}
   m_Layer: 0
   m_Name: Positioner
   m_TagString: Untagged
@@ -97,3 +99,27 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7575323196461516228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3615574315403203911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2705638ae65a74cea978f022807fe3a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-8100782827559692501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3615574315403203911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e70d9cb6253f40559ca1aa23bdfa5d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

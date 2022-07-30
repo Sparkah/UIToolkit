@@ -392,8 +392,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e557b3c775955432cb4ac2f753425fd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _positionerTransform: {fileID: 7744801274476810200, guid: 4483fa1ff69bc44e597caf28e2807825, type: 3}
-  _painterTransform: {fileID: 7804476179851464000, guid: c7bcc4741bf6341c6a02543960e423e6, type: 3}
+  Robots:
+  - {fileID: 4189412709130581054, guid: c7bcc4741bf6341c6a02543960e423e6, type: 3}
+  - {fileID: 3615574315403203911, guid: 4483fa1ff69bc44e597caf28e2807825, type: 3}
 --- !u!4 &1257863571
 Transform:
   m_ObjectHideFlags: 0

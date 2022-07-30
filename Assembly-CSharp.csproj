@@ -41,15 +41,12 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets/Scripts/UIScripts/MenuScript.cs">
-       <CustomToolNamespace>UI.RobotInstantiatorPanels</CustomToolNamespace>
-     </Compile>
-     <Compile Include="Assets/Scripts/GameObjectScripts/SceneObjectsInstantiator.cs">
-       <CustomToolNamespace>UI.RobotInstantiatorPanels</CustomToolNamespace>
-     </Compile>
-     <Compile Include="Assets/Scripts/UIScripts/ComponentsScript.cs">
-       <CustomToolNamespace>UI.RobotInstantiatorPanels</CustomToolNamespace>
-     </Compile>
+     <Compile Include="Assets/Scripts/GameObjectScripts/ComponentScriptsForGameObjects/SliderComponent.cs" />
+     <Compile Include="Assets/Scripts/UIScripts/ComponentsScript.cs" />
+     <Compile Include="Assets/Scripts/GameObjectScripts/ComponentScriptsForGameObjects/IPComponent.cs" />
+     <Compile Include="Assets/Scripts/UIScripts/MenuScript.cs" />
+     <Compile Include="Assets/Scripts/GameObjectScripts/ComponentScriptsForGameObjects/PoseComponent.cs" />
+     <Compile Include="Assets/Scripts/GameObjectScripts/SceneObjectsInstantiator.cs" />
      <Reference Include="UnityEngine">
      <HintPath>/Applications/Unity/Hub/Editor/2021.3.6f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
      </Reference>

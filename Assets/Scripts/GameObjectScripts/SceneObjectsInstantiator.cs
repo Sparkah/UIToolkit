@@ -4,15 +4,10 @@ namespace UI.RobotInstantiationPanel
 {
     public class SceneObjectsInstantiator : MonoBehaviour
     {
-        private MenuScript _menuScript;
-        public GameObject SceneObject;
+        public GameObject SceneObject { get; private set; } 
+        public GameObject[] Robots;
 
-        public void ConstructMenuScript(MenuScript menuScript)
-        {
-            _menuScript = menuScript;
-        }
-
-        private void CreateObject(GameObject objectToCreate)
+        public void CreateOrDestroyObject(GameObject objectToCreate)
         {
             if (SceneObject == null)
             {
@@ -29,32 +24,5 @@ namespace UI.RobotInstantiationPanel
             Destroy(objectToDestroy);
             SceneObject = null;
         }
-
-        #region Positioner
-
-        [SerializeField] private Transform _positionerTransform;
-        private bool _positionerToggle = false;
-        private GameObject _positionerObject;
-
-        public void CreateDestroyPositioner()
-        {
-            CreateObject(_positionerTransform.gameObject);
-        }
-
-        #endregion
-
-
-        #region Painter
-
-        [SerializeField] private Transform _painterTransform;
-        private bool _painterToggle = false;
-        private GameObject _painterObject;
-
-        public void CreateDestroyPainter()
-        {
-            CreateObject(_painterTransform.gameObject);
-        }
-
-        #endregion
     }
 }
