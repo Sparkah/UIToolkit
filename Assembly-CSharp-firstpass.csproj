@@ -777,6 +777,10 @@
       <Project>{d9d54fa2-ae95-29e1-2305-e26d221ae1f6}</Project>
       <Name>Unity.VisualScripting.State</Name>
     </ProjectReference>
+    <ProjectReference Include="Scripts.csproj">
+      <Project>{b64a2035-8f27-459e-b4ba-d8d29a2ca60c}</Project>
+      <Name>Scripts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

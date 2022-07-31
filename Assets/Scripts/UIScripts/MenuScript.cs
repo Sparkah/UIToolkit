@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -15,7 +14,7 @@ namespace UI.RobotInstantiationPanel
         private Button _buttonShowHidePanel;
         private VisualElement _slidePanel;
         private ScrollView _scrollView;
-        private bool _showSlidePanel = false;
+        private bool _showSlidePanel;
         
         private List <VisualElement> _visualElementList = new List<VisualElement>();
         private List <Toggle> _toggleList = new List<Toggle>();
@@ -40,9 +39,11 @@ namespace UI.RobotInstantiationPanel
         private void SetUpRobot(GameObject robot)
         {
 
-                var toggle = new Toggle("Toggle" + robot.name);
-                toggle.label = "Create " + robot.name;
-                
+                var toggle = new Toggle("Toggle" + robot.name)
+                {
+                    label = "Create " + robot.name
+                };
+
                 var vis = new VisualElement
                 {
                     name = "VisualElement" + robot.name,
@@ -63,13 +64,11 @@ namespace UI.RobotInstantiationPanel
 
         private void FindRobot(ClickEvent evt, Toggle toggleClicked)
         {
-            int robotIndex;
-            for (int toggleIndex = 0; toggleIndex < _toggleList.Count; toggleIndex++)
+            for (var toggleIndex = 0; toggleIndex < _toggleList.Count; toggleIndex++)
             {
                 if (toggleClicked == _toggleList[toggleIndex])
                 {
-                    robotIndex = toggleIndex;
-                    CreateRobot(robotIndex, toggleClicked);
+                    CreateRobot(toggleIndex, toggleClicked);
                 }
             }
         }
@@ -78,17 +77,15 @@ namespace UI.RobotInstantiationPanel
         {
             if (toggleClicked.value)
             {
-                bool create = true;
                 _visualElementList[robotIndex].style.display = DisplayStyle.Flex;
                 _sceneObjectsInstantiator.CreateOrDestroyObject(_robotsList[robotIndex]);
-                AddRobotComponents(_robotsList[robotIndex], robotIndex, create);
+                AddRobotComponents(_robotsList[robotIndex], robotIndex, true);
             }
             else
             {
-                bool create = false;
                 _visualElementList[robotIndex].style.display = DisplayStyle.None;
                 _sceneObjectsInstantiator.CreateOrDestroyObject(_robotsList[robotIndex]);
-                AddRobotComponents(_robotsList[robotIndex], robotIndex, create);
+                AddRobotComponents(_robotsList[robotIndex], robotIndex, false);
             }
         }
 

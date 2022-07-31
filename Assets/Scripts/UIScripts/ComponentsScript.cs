@@ -1,3 +1,4 @@
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -43,7 +44,7 @@ namespace UI.RobotInstantiationPanel
         private void ChangeSliderSizeSlider(ChangeEvent<float> evt)
         {
             _sliderObject.transform.localScale = new Vector3(evt.newValue, evt.newValue, evt.newValue);
-            _sliderTextField.value = _sliderSlider.value.ToString();
+            _sliderTextField.value = _sliderSlider.value.ToString(CultureInfo.CurrentCulture);
         }
 
         private void ChangeSliderSizeText(ChangeEvent<string> evt)

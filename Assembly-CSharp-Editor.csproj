@@ -715,10 +715,6 @@
       <Project>{678d91eb-f319-a3f5-6d88-f0e263d72ead}</Project>
       <Name>Assembly-CSharp-firstpass</Name>
     </ProjectReference>
-    <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{9873f88a-2ad0-98fa-5b1e-5b135ef170f1}</Project>
-      <Name>Assembly-CSharp</Name>
-    </ProjectReference>
     <ProjectReference Include="UnityEngine.TestRunner.csproj">
       <Project>{83fc51c0-6117-7bf7-507e-2fad64de4258}</Project>
       <Name>UnityEngine.TestRunner</Name>
@@ -830,6 +826,10 @@
     <ProjectReference Include="Unity.VisualScripting.State.csproj">
       <Project>{d9d54fa2-ae95-29e1-2305-e26d221ae1f6}</Project>
       <Name>Unity.VisualScripting.State</Name>
+    </ProjectReference>
+    <ProjectReference Include="Scripts.csproj">
+      <Project>{b64a2035-8f27-459e-b4ba-d8d29a2ca60c}</Project>
+      <Name>Scripts</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

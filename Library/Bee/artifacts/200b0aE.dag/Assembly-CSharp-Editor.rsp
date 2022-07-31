@@ -339,7 +339,7 @@
 -r:"Assets/Plugins/Demigiant/DOTween/DOTween.dll"
 -r:"Assets/Plugins/Demigiant/DOTween/Editor/DOTweenEditor.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/Assembly-CSharp-firstpass.ref.dll"
--r:"Library/Bee/artifacts/200b0aE.dag/Assembly-CSharp.ref.dll"
+-r:"Library/Bee/artifacts/200b0aE.dag/Scripts.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/Unity.EditorCoroutines.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/Unity.Performance.Profile-Analyzer.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
